@@ -2,6 +2,7 @@ package com.demo.weatherApp;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
+import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.client.WebClient;
@@ -32,7 +33,7 @@ public class MainVerticle extends AbstractVerticle {
 
     // Pool options
     PoolOptions poolOptions = new PoolOptions()
-        .setMaxSize(5);
+        .setMaxSize(10);
 
     // Create the pooled client
     MySQLPool client2 = MySQLPool.pool(vertx, connectOptions, poolOptions);
@@ -107,6 +108,7 @@ public class MainVerticle extends AbstractVerticle {
 
             String show = body2.toString();
             System.out.println("Rec " + response.statusCode() + " " + show + "\n Response of Place");
+            ctx.response().end(Json.encodePrettily(body2));
 
           })
           .onFailure(err -> System.out.println("Something Went Wrong"));
@@ -145,6 +147,8 @@ public class MainVerticle extends AbstractVerticle {
 
             String show = body2.toString();
             System.out.println("Rec " + response.statusCode() + " " + show + "\n Response of zipcode");
+            ctx.response().end(Json.encodePrettily(body2));
+
           })
           .onFailure(err -> System.out.println("Something Went Wrong"));
     });
@@ -180,6 +184,8 @@ public class MainVerticle extends AbstractVerticle {
                 });
             String show = body2.toString();
             System.out.println("Rec " + response.statusCode() + " " + show + "\n Response of lat & long");
+            ctx.response().end(Json.encodePrettily(body2));
+
           })
           .onFailure(err -> System.out.println("Something Went Wrong"));
 
@@ -212,6 +218,7 @@ public class MainVerticle extends AbstractVerticle {
                 System.out.print("\n");
               }
               System.out.println("Got weather data of " + place + " " + ar.result() + " " + show);
+              ctx.response().end(show);
 
             } else {
               System.out.println("Failure: " + ar.cause().getMessage());
@@ -244,6 +251,7 @@ public class MainVerticle extends AbstractVerticle {
                 System.out.print("\n");
               }
               System.out.println("Got weather data of " + zipcode + " " + ar.result() + " " + show);
+              ctx.response().end(show);
 
             } else {
               System.out.println("Failure: " + ar.cause().getMessage());
@@ -278,6 +286,8 @@ public class MainVerticle extends AbstractVerticle {
                 System.out.print("\n");
               }
               System.out.println("Got weather data of " + lat + " " + lon + " " + ar.result() + " " + show);
+              ctx.response().end(show);
+
             } else {
               System.out.println("Failure: " + ar.cause().getMessage());
               client2.close();
@@ -314,6 +324,8 @@ public class MainVerticle extends AbstractVerticle {
 
             String show = body2.toString();
             System.out.println("Rec " + response.statusCode() + " " + show + "\n Response of Place");
+            ctx.response().end(Json.encodePrettily(body2));
+
           })
           .onFailure(err -> System.out.println("Something Went Wrong"));
     });
@@ -345,6 +357,8 @@ public class MainVerticle extends AbstractVerticle {
 
             String show = body2.toString();
             System.out.println("Rec " + response.statusCode() + " " + show + "\n Response of zipcode");
+            ctx.response().end(Json.encodePrettily(body2));
+
           })
           .onFailure(err -> System.out.println("Something Went Wrong"));
     });
@@ -373,6 +387,8 @@ public class MainVerticle extends AbstractVerticle {
                 });
             String show = body2.toString();
             System.out.println("Rec " + response.statusCode() + " " + show + "\n Response of lat & long");
+            ctx.response().end(Json.encodePrettily(body2));
+
           })
           .onFailure(err -> System.out.println("Something Went Wrong"));
     });
